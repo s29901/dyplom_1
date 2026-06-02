@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1397673564773462594}
   - component: {fileID: 3286073784538944589}
+  - component: {fileID: 6058142330717625553}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,3 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9656e0cc3e93b4698a8c565c184b06ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+--- !u!114 &6058142330717625553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5573912502481024803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b82652e8f6704c8aa9aa3142f55b40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProgressManager
+  quest1Done: 0
+  quest2Done: 0
+  quest3Done: 0
+  quest4Done: 0
