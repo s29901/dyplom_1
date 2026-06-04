@@ -26,8 +26,8 @@ public class HeroMovement : MonoBehaviour
         // Двигаем героя
         transform.position += direction * speed * Time.deltaTime;
 
-        // Сортировка глубины: чем дальше герой — тем позже рисуется
-        // Это и есть замена depth shader для простых сцен
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(-transform.position.z * 10);
+        // Глубина: меньше Z (ближе к камере) → больше sortingOrder → рисуется поверх
+        // +100 — базовый офсет, чтобы герой не уходил за фон при положительных Z
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(-transform.position.z * 10) + 100;
     }
 }

@@ -17,6 +17,7 @@ public class CloudDrag : MonoBehaviour
     private float rainProgress = 0f;
     private float patrolAngle = 0f;
     private Plane dragPlane;
+    private SpriteRenderer spriteRenderer;
 
     // Сообщаем QuestManager когда облако пролито
     public System.Action OnCloudDone;
@@ -24,9 +25,12 @@ public class CloudDrag : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        // Плоскость на высоте облака — по ней тащим
         dragPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
         if (rainObject != null) rainObject.SetActive(false);
+
+        // Облака рисуются поверх героя (они выше по сцене)
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null) spriteRenderer.sortingOrder = 200;
     }
 
     void Update()
@@ -41,10 +45,12 @@ public class CloudDrag : MonoBehaviour
 
     void HandlePatrol()
     {
-        // Плавное качание туда-сюда
+        // Плавное качание по X и Z — покрывает всю сцену
         patrolAngle += Time.deltaTime * patrolSpeed;
         transform.position = startPosition + new Vector3(
-            Mathf.Sin(patrolAngle) * patrolRange, 0, 0
+            Mathf.Sin(patrolAngle) * patrolRange,
+            0,
+            Mathf.Cos(patrolAngle * 0.7f) * patrolRange * 0.5f
         );
     }
 
