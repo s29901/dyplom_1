@@ -6,28 +6,31 @@ public class HeroMovement : MonoBehaviour
     [SerializeField] private float speed = 5f;
 
     private SpriteRenderer spriteRenderer;
+    private Camera cam;
 
     void Start()
     {
-        // Запоминаем компонент при старте, чтобы не искать каждый кадр
         spriteRenderer = GetComponent<SpriteRenderer>();
+        cam = Camera.main;
     }
 
     void Update()
     {
-        // Считываем стрелки клавиатуры (-1, 0 или 1)
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        // Собираем направление движения в 3D-пространстве
-        // Y = 0 потому что герой не летает
-        Vector3 direction = new Vector3(h, 0f, v).normalized;
+        // Проєктуємо напрям камери на горизонтальну площину XZ,
+        // щоб рух "вперед/назад/вбік" збігався з тим, що видно на екрані
+        Vector3 camForward = cam.transform.forward;
+        Vector3 camRight   = cam.transform.right;
+        camForward.y = 0f; camForward.Normalize();
+        camRight.y   = 0f; camRight.Normalize();
 
-        // Двигаем героя
+        Vector3 direction = (camRight * h + camForward * v).normalized;
+
         transform.position += direction * speed * Time.deltaTime;
 
-        // Глубина: меньше Z (ближе к камере) → больше sortingOrder → рисуется поверх
-        // +100 — базовый офсет, чтобы герой не уходил за фон при положительных Z
+        // Глибина: менше Z (ближче до камери) → вищий sortingOrder → малюється поверх
         spriteRenderer.sortingOrder = Mathf.RoundToInt(-transform.position.z * 10) + 100;
     }
 }
