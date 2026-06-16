@@ -3,14 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class PortalTrigger : MonoBehaviour
 {
-    // Название сцены — заполняем в Inspector для каждого портала
     [SerializeField] private string sceneName;
 
     void OnTriggerEnter(Collider other)
     {
-        // Реагируем только на героя
+        // Выводим в консоль ЧТО вошло в триггер
+        Debug.Log("Триггер сработал! Объект: " + other.gameObject.name + " Тег: " + other.tag);
+        
         if (other.CompareTag("Hero"))
         {
+            Debug.Log("Загружаем сцену: " + sceneName);
             SceneManager.LoadScene(sceneName);
         }
     }
