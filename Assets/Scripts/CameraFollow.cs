@@ -24,8 +24,8 @@ public class CameraFollow : MonoBehaviour
 
             float orthH = cam.orthographicSize;
             float halfW = orthH * cam.aspect;
-            minX = b.min.x + halfW;
-            maxX = b.max.x - halfW;
+            minX = b.min.x + halfW + cam.orthographicSize * 0.5f;
+            maxX = b.max.x - halfW - cam.orthographicSize * 0.5f;
 
             // Камера нахилена: fwd.z = cos(кута), fwd.y = -sin(кута)
             // Щоб знайти Z камери, при якому край екрана збігається з краєм фону по Y,
@@ -40,6 +40,8 @@ public class CameraFollow : MonoBehaviour
             float camZBottom = bgZ + (b.min.y - camY + viewHalfH) / tanA;
             minZ = Mathf.Min(camZTop, camZBottom) - extra_min_z;
             maxZ = Mathf.Max(camZTop, camZBottom);
+
+            Debug.Log($"CameraBounds → minX={minX:F2} maxX={maxX:F2} | minZ={minZ:F2} maxZ={maxZ:F2} | halfW={halfW:F2}");
         }
     }
 
