@@ -17,12 +17,15 @@ public class CameraFollow : MonoBehaviour
 
         if (background != null)
         {
+            Camera cam = Camera.main;
+            float halfH = cam.orthographicSize;
+            float halfW = halfH * cam.aspect;
+
             Bounds b = background.bounds;
-            minX = b.min.x;
-            maxX = b.max.x;
-            // спрайт лежить на XY площині, тому вертикаль фону = b.Y → клампимо Z камери
-            minZ = b.min.y;
-            maxZ = b.max.y;
+            minX = b.min.x + halfW;
+            maxX = b.max.x - halfW;
+            minZ = b.min.y + halfH;
+            maxZ = b.max.y - halfH;
         }
     }
 
