@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour
 
     [Header("Межі фону")]
     [SerializeField] private SpriteRenderer background;
+    [SerializeField] private float extra_min_z = 30f;
 
     private Vector3 offset;
     private float minX, maxX, minZ, maxZ;
@@ -18,14 +19,27 @@ public class CameraFollow : MonoBehaviour
         if (background != null)
         {
             Camera cam = Camera.main;
-            float halfH = cam.orthographicSize;
-            float halfW = halfH * cam.aspect;
-
+            Vector3 fwd = cam.transform.forward;
             Bounds b = background.bounds;
+
+            float orthH = cam.orthographicSize;
+            float halfW = orthH * cam.aspect;
             minX = b.min.x + halfW;
             maxX = b.max.x - halfW;
-            minZ = b.min.y + halfH;
-            maxZ = b.max.y - halfH;
+
+            // Камера нахилена: fwd.z = cos(кута), fwd.y = -sin(кута)
+            // Щоб знайти Z камери, при якому край екрана збігається з краєм фону по Y,
+            // використовуємо проекцію через кут нахилу
+            float bgZ   = background.transform.position.z;
+            float camY  = transform.position.y;
+            float cosA  = fwd.z;
+            float tanA  = -fwd.y / fwd.z;
+            float viewHalfH = orthH / cosA; // покриття по Y фону від центру до краю екрана
+
+            float camZTop    = bgZ + (b.max.y - camY - viewHalfH) / tanA;
+            float camZBottom = bgZ + (b.min.y - camY + viewHalfH) / tanA;
+            minZ = Mathf.Min(camZTop, camZBottom) - extra_min_z;
+            maxZ = Mathf.Max(camZTop, camZBottom);
         }
     }
 
