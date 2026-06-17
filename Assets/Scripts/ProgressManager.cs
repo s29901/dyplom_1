@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class ProgressManager : MonoBehaviour
 {
-    // Синглтон — один на всю игру, доступен из любой сцены
+    // Singleton, jeden na całą grę, dostępny z każdej sceny
     public static ProgressManager Instance;
 
-    // Какие квесты пройдены
+    // Które questy zostały zakończone
     public bool quest1Done = false;
     public bool quest2Done = false;
     public bool quest3Done = false;
     public bool quest4Done = false;
 
-    // Сколько квестов пройдено (0-4) — определяет стадию растения
+    // Ile questów zakończono (0-4), określa etap rośliny
     public int QuestsCompleted()
     {
         int count = 0;
@@ -24,13 +24,13 @@ public class ProgressManager : MonoBehaviour
 
     void Awake()
     {
-        // Если менеджер уже есть — уничтожаем дубликат
+        // Jeśli menedżer już istnieje, usuwamy duplikat
         if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        // Запоминаем себя и не уничтожаемся при смене сцен
+        // Zapamiętujemy siebie i nie jesteśmy usuwani przy zmianie scen
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }

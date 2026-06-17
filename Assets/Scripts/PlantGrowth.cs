@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlantGrowth : MonoBehaviour
 {
-    // Сюда перетащишь 5 спрайтов в Inspector — от семечка до дерева
+    // Tutaj przeciągniesz 5 sprite'ów w Inspectorze, od ziarenka do drzewa
     [SerializeField] private Sprite[] growthStages = new Sprite[5];
 
     private SpriteRenderer spriteRenderer;
@@ -10,21 +10,21 @@ public class PlantGrowth : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        UpdatePlant(); // показываем нужную стадию при старте
+        UpdatePlant(); // pokazujemy odpowiedni etap na starcie
     }
 
-    // Вызывается при старте и после каждого квеста
+    // Wywoływane na starcie i po każdym queście
     public void UpdatePlant()
     {
         if (ProgressManager.Instance == null) return;
 
-        // Узнаём сколько квестов пройдено (0-4)
+        // Sprawdzamy, ile questów zostało zakończonych (0-4)
         int stage = ProgressManager.Instance.QuestsCompleted();
 
-        // Защита — не выходим за пределы массива
+        // Zabezpieczenie, nie wychodzimy poza zakres tablicy
         stage = Mathf.Clamp(stage, 0, growthStages.Length - 1);
 
-        // Меняем спрайт если он назначен
+        // Zmieniamy sprite, jeśli jest przypisany
         if (growthStages[stage] != null)
             spriteRenderer.sprite = growthStages[stage];
     }

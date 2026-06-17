@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SunDrag : MonoBehaviour
 {
-    // Плоскость на высоте Y=3 — солнышко летает здесь
+    // Płaszczyzna na wysokości Y=3, słoneczko lata tutaj
     private Plane sunPlane;
 
     void Start()
@@ -12,15 +12,15 @@ public class SunDrag : MonoBehaviour
 
     void Update()
     {
-        // Пускаем луч из камеры через позицию мыши
+        // Wysyłamy promień z kamery przez pozycję myszy
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float distance;
 
-        // Находим где луч пересекает плоскость
+        // Znajdujemy, gdzie promień przecina płaszczyznę
         if (sunPlane.Raycast(ray, out distance))
         {
             Vector3 worldPos = ray.GetPoint(distance);
-            // Солнышко следует за мышкой
+            // Słoneczko podąża za myszką
             transform.position = worldPos;
         }
     }

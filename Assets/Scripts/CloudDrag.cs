@@ -3,12 +3,12 @@ using System.Collections;
 
 public class CloudDrag : MonoBehaviour
 {
-    [SerializeField] private float patrolSpeed = 1f;    // скорость патруля
-    [SerializeField] private float patrolRange = 2f;    // ширина качания
-    [SerializeField] private float rainDuration = 3f;   // секунд удержания над деревом
-    [SerializeField] private Transform tree;             // дерево
-    [SerializeField] private float treeRadius = 2f;     // зона над деревом
-    [SerializeField] private GameObject rainObject;      // дочерний объект с анимацией дождя
+    [SerializeField] private float patrolSpeed = 1f;    // prędkość patrolu
+    [SerializeField] private float patrolRange = 2f;    // szerokość kołysania
+    [SerializeField] private float rainDuration = 3f;   // sekund przebywania nad drzewem
+    [SerializeField] private Transform tree;             // drzewo
+    [SerializeField] private float treeRadius = 2f;     // strefa nad drzewem
+    [SerializeField] private GameObject rainObject;      // obiekt potomny z animacją deszczu
 
     private Vector3 startPosition;
     private bool isDragging = false;
@@ -19,7 +19,7 @@ public class CloudDrag : MonoBehaviour
     private Plane dragPlane;
     private SpriteRenderer spriteRenderer;
 
-    // Сообщаем QuestManager когда облако пролито
+    // Informujemy QuestManager, kiedy chmura skończy padać
     public System.Action OnCloudDone;
 
     void Start()
@@ -28,7 +28,7 @@ public class CloudDrag : MonoBehaviour
         dragPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
         if (rainObject != null) rainObject.SetActive(false);
 
-        // Облака рисуются поверх героя (они выше по сцене)
+        // Chmury są rysowane nad bohaterem (są wyżej w scenie)
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) spriteRenderer.sortingOrder = 200;
     }
@@ -45,7 +45,7 @@ public class CloudDrag : MonoBehaviour
 
     void HandlePatrol()
     {
-        // Плавное качание по X и Z — покрывает всю сцену
+        // Płynne kołysanie po X i Z, obejmuje całą scenę
         patrolAngle += Time.deltaTime * patrolSpeed;
         transform.position = startPosition + new Vector3(
             Mathf.Sin(patrolAngle) * patrolRange,
@@ -56,13 +56,13 @@ public class CloudDrag : MonoBehaviour
 
     void HandleDrag()
     {
-        // Тащим облако за мышкой
+        // Przesuwamy chmurę za myszką
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float dist;
         if (dragPlane.Raycast(ray, out dist))
             transform.position = ray.GetPoint(dist);
 
-        // Над деревом?
+        // Nad drzewem?
         float distToTree = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
             new Vector2(tree.position.x, tree.position.z)
@@ -70,7 +70,7 @@ public class CloudDrag : MonoBehaviour
 
         if (distToTree < treeRadius)
         {
-            // Дождь идёт
+            // Deszcz pada
             if (rainObject != null) rainObject.SetActive(true);
             rainProgress += Time.deltaTime;
             if (rainProgress >= rainDuration)
@@ -81,11 +81,11 @@ public class CloudDrag : MonoBehaviour
         }
         else
         {
-            // Не над деревом — дождь стоп
+            // Nie nad drzewem, deszcz stop
             if (rainObject != null) rainObject.SetActive(false);
         }
 
-        // Игрок отпустил мышку
+        // Gracz zwolnił przycisk myszy
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
@@ -106,13 +106,13 @@ public class CloudDrag : MonoBehaviour
         isDone = true;
         isDragging = false;
         if (rainObject != null) rainObject.SetActive(false);
-        OnCloudDone?.Invoke(); // сообщаем QuestManager
+        OnCloudDone?.Invoke(); // informujemy QuestManager
         StartCoroutine(DisappearEffect());
     }
 
     IEnumerator DisappearEffect()
     {
-        // Облако плавно уменьшается и исчезает
+        // Chmura płynnie zmniejsza się i zanika
         float elapsed = 0f;
         Vector3 startScale = transform.localScale;
         while (elapsed < 0.5f)
@@ -135,7 +135,7 @@ public class CloudDrag : MonoBehaviour
             transform.position = Vector3.Lerp(currentPos, startPosition, elapsed);
             yield return null;
         }
-        patrolAngle = 0f; // чтобы не было прыжка
+        patrolAngle = 0f; // aby nie było skoku
         isReturning = false;
     }
 }

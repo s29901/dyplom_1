@@ -7,8 +7,8 @@ public class QuestManager_Q1 : MonoBehaviour
     [SerializeField] private Transform sun;
     [SerializeField] private Transform plant;
     [SerializeField] private WarmthBar warmthBar;
-    [SerializeField] private HeroMovement heroMovement;   // герой
-    [SerializeField] private GameObject completionText;   // текст "Росток почувствовал тепло"
+    [SerializeField] private HeroMovement heroMovement;   // bohater
+    [SerializeField] private GameObject completionText;   // tekst "Pęd poczuł ciepło"
 
     [SerializeField] private float fillDuration = 20f;
     [SerializeField] private float sunRadius = 2f;
@@ -48,10 +48,10 @@ public class QuestManager_Q1 : MonoBehaviour
 
     IEnumerator CompletionAnimation()
     {
-        // Останавливаем героя
+        // Zatrzymujemy bohatera
         heroMovement.enabled = false;
 
-        // Растение вырастает — плавно увеличивается
+        // Roślina rośnie, płynnie się zwiększa
         float elapsed = 0f;
         Vector3 startScale = plant.localScale;
         Vector3 endScale = startScale * 1.5f;
@@ -63,13 +63,13 @@ public class QuestManager_Q1 : MonoBehaviour
             yield return null;
         }
 
-        // Показываем текст
+        // Pokazujemy tekst
         completionText.SetActive(true);
 
-        // Ждём 2 секунды
+        // Czekamy 2 sekundy
         yield return new WaitForSeconds(2f);
 
-        // Убираем текст, возвращаем управление
+        // Chowamy tekst, oddajemy kontrolę
         completionText.SetActive(false);
         heroMovement.enabled = true;
     }

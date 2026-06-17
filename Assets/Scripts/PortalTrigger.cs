@@ -7,7 +7,7 @@ public class PortalTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Выводим в консоль ЧТО вошло в триггер
+        // Wyświetlamy w konsoli, CO weszło do triggera
         Debug.Log("Триггер сработал! Объект: " + other.gameObject.name + " Тег: " + other.tag);
         
         if (other.CompareTag("Hero"))

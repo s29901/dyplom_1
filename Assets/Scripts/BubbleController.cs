@@ -5,12 +5,12 @@ using TMPro;
 public class BubbleController : MonoBehaviour
 {
     [Header("Настройки")]
-    public string phrase;           // текст фразы ("мне страшно" и т.д.)
+    public string phrase;           // tekst frazy ("boję się" itp.)
     public Color silentColor = Color.gray;
     public Color spokenColor = Color.yellow;
 
     [Header("UI")]
-    public GameObject buttonPanel;  // панель с кнопками
+    public GameObject buttonPanel;  // panel z przyciskami
 
     private SpriteRenderer sr;
     private bool isSaid = false;
@@ -31,7 +31,7 @@ public class BubbleController : MonoBehaviour
     {
         if (!isSaid)
         {
-            // покачивание вверх-вниз
+            // kołysanie w górę i w dół
             float newY = startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatAmount;
             transform.position = new Vector3(startPos.x, newY, startPos.z);
         }
@@ -48,9 +48,9 @@ public class BubbleController : MonoBehaviour
         isSaid = true;
         sr.color = spokenColor;
         buttonPanel.SetActive(false);
-        // взлетает вверх
+        // wzlatuje do góry
         StartCoroutine(FlyUp());
-        // сообщаем менеджеру
+        // informujemy menedżera
         FindObjectOfType<QuestManager_Q3>().OnBubbleSaid();
     }
 

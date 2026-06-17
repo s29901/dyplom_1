@@ -1,21 +1,21 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // нужно для работы со сценами
+using UnityEngine.SceneManagement; // potrzebne do pracy ze scenami
 
 public class SceneLoader : MonoBehaviour
 {
-    // Загружает любую сцену по имени — используем везде
+    // Wczytuje każdą scenę po nazwie, używane wszędzie
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
-    // Быстрый возврат в хаб — будем вызывать после каждого квеста
+    // Szybki powrót do hubu, będziemy wywoływać po każdym queście
     public void LoadHub()
     {
         SceneManager.LoadScene("02_HubGarden");
     }
 
-    // Следующая сцена по порядку — удобно для интро и концовки
+    // Następna scena w kolejności, przydatne dla intro i zakończenia
     public void LoadNextScene()
     {
         int currentIndex = SceneManager.GetActiveScene().buildIndex;

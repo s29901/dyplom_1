@@ -12,7 +12,7 @@ public class ButterflyController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         speed = Random.Range(1.5f, 3.5f);
         
-        // считаем границы один раз при старте
+        // liczymy granice jeden raz na starcie
         Camera cam = Camera.main;
         float height = cam.orthographicSize;
         float width = height * cam.aspect;
@@ -30,7 +30,7 @@ public class ButterflyController : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
-        // принудительно зажимаем позицию в границах
+        // wymuszamy ograniczenie pozycji do granic
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, minX, maxX),
             Mathf.Clamp(transform.position.y, minY, maxY),

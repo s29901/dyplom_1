@@ -3,7 +3,7 @@ using System.Collections;
 
 public class QuestManager_Q2 : MonoBehaviour
 {
-    [SerializeField] private CloudDrag[] clouds;       // все 5 облаков
+    [SerializeField] private CloudDrag[] clouds;       // wszystkie 5 chmur
     [SerializeField] private HeroMovement heroMovement;
     [SerializeField] private GameObject completionText;
     [SerializeField] private Transform plant;
@@ -12,7 +12,7 @@ public class QuestManager_Q2 : MonoBehaviour
 
     void Start()
     {
-        // Подписываемся на событие каждого облака
+        // Zapisujemy się na zdarzenie każdej chmury
         foreach (CloudDrag cloud in clouds)
             cloud.OnCloudDone += OnCloudCompleted;
     }
@@ -20,7 +20,7 @@ public class QuestManager_Q2 : MonoBehaviour
     void OnCloudCompleted()
     {
         cloudsCompleted++;
-        StartCoroutine(PlantReact()); // дерево оживает
+        StartCoroutine(PlantReact()); // drzewo ożywa
 
         if (cloudsCompleted >= 5)
             StartCoroutine(CompletionAnimation());
@@ -28,7 +28,7 @@ public class QuestManager_Q2 : MonoBehaviour
 
     IEnumerator PlantReact()
     {
-        // Дерево слегка пульсирует
+        // Drzewo lekko pulsuje
         Vector3 original = plant.localScale;
         Vector3 bigger = original * 1.1f;
         float elapsed = 0f;
@@ -52,7 +52,7 @@ public class QuestManager_Q2 : MonoBehaviour
     {
         if (heroMovement != null) heroMovement.enabled = false;
 
-        // Дерево вырастает
+        // Drzewo rośnie
         Vector3 startScale = plant.localScale;
         Vector3 endScale = startScale * 1.5f;
         float elapsed = 0f;

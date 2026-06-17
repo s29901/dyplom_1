@@ -27,14 +27,14 @@ public class CameraFollow : MonoBehaviour
             minX = b.min.x + halfW + cam.orthographicSize * 0.5f;
             maxX = b.max.x - halfW - cam.orthographicSize * 0.5f;
 
-            // Камера нахилена: fwd.z = cos(кута), fwd.y = -sin(кута)
-            // Щоб знайти Z камери, при якому край екрана збігається з краєм фону по Y,
-            // використовуємо проекцію через кут нахилу
+            // Kamera jest przechylona: fwd.z = cos(kąta), fwd.y = -sin(kąta)
+            // Aby znaleźć Z kamery, przy którym brzeg ekranu zgadza się z brzegiem tła po Y,
+            // używamy projekcji poprzez kąt przechylenia
             float bgZ   = background.transform.position.z;
             float camY  = transform.position.y;
             float cosA  = fwd.z;
             float tanA  = -fwd.y / fwd.z;
-            float viewHalfH = orthH / cosA; // покриття по Y фону від центру до краю екрана
+            float viewHalfH = orthH / cosA; // pokrycie po Y tła od centrum do brzegu ekranu
 
             float camZTop    = bgZ + (b.max.y - camY - viewHalfH) / tanA;
             float camZBottom = bgZ + (b.min.y - camY + viewHalfH) / tanA;

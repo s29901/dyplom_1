@@ -43,7 +43,7 @@ public class QuestManager_Q3 : MonoBehaviour
         if (completionText != null)
             completionText.SetActive(true);
 
-        // текст показывается 3 секунды потом исчезает
+        // tekst jest wyświetlany 3 sekundy, potem zanika
         yield return new WaitForSeconds(3f);
     
         if (completionText != null)
